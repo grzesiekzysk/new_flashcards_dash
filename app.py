@@ -25,14 +25,24 @@ app.layout = html.Div([
         placeholder='Wpisz coś...',
         style={
             'font-size': '18px',
-            'width': '50%'
+            'width': '200px'
+        }
+    ),
+    html.Button(
+        'Dodaj fiszkę', 
+        id='button-1', 
+        n_clicks=0,
+        style={
+            'font-size': '18px',
+            'vertical-align': 'top'
         }
     ),
     html.Div(
         id='popularity',
         style={
             'font-size': '25px',
-            'color': 'red',
+            'font-weight': 'bold',
+            'color': '#3333FF',
             'margin-left': '20px',
             'display': 'inline-block',
             'vertical-align': 'top'
@@ -47,13 +57,15 @@ app.layout = html.Div([
             #'display': 'grid', 
             #'grid-template-columns': '50% 50%',
             'display': 'block', 
-            'font-size': '15px'}
+            'font-size': '20px'}
     ),
+    html.Br(),
+    html.Br(),
     html.P(
         id='output-1',
         style={
             'margin-top': '10px', 
-            'font-size': '15px', 
+            'font-size': '20px', 
             'border': '1px solid #000', 
             'padding': '10px'}
     ),
@@ -64,7 +76,7 @@ app.layout = html.Div([
         id='output-2',
         style={
             'margin-top': '10px', 
-            'font-size': '15px', 
+            'font-size': '20px', 
             'border': '1px solid #000', 
             'padding': '10px'}
     ),
@@ -75,11 +87,11 @@ app.layout = html.Div([
         id='output-3',
         style={
             'margin-top': '10px', 
-            'font-size': '15px', 
-            'border': '1px solid #000', 
+            'font-size': '20px',
+            'color': '#66B2FF',
+            # 'border': '1px solid #000', 
             'padding': '10px'}
-    ),
-    html.Script(src="/assets/copy.js")
+    )
 ])
 
 @app.callback(
@@ -101,13 +113,13 @@ def update_output(input_value):
 
     checkboxy = [{'label': word[1] + f' [{parts_of_speach[word[0]]}]', 'value': word[0]} for word in enumerate(polish_words)]
 
-    lista_3 = []
+    # lista_3 = []
 
-    for w in other_words:
-        # lista_3.append(w)
-        # lista_3.append(' | ')
-        lista_3.append(html.A(w, href='#', id={'type': 'dynamic-link', 'index': w}, **{'data-copy': w}))
-        lista_3.append(' | ')
+    # for w in other_words:
+    #     lista_3.append(w)
+    #     lista_3.append(' | ')
+
+    lista_3 = ' | '.join(other_words)
     
     return checkboxy, [0], popularity, lista_3 
 
@@ -147,7 +159,35 @@ def update_checkboxes(selected_values):
     except:
         pass
 
-    return lista_1, lista_2
+    def usun_koncowe_br(lista):
+        while lista and isinstance(lista[-1], html.Br):
+            lista.pop()
+        return lista
+
+    return usun_koncowe_br(lista_1), usun_koncowe_br(lista_2)
+
+@app.callback(
+    Input('button-1', 'n_clicks'),
+    [State('output-1', 'children'),
+     State('output-2', 'children')]
+)
+def handle_button_click(n_clicks, output_1, output_2):
+    if n_clicks > 0:
+
+        html_content = []
+        
+        for item in output_2:
+            if isinstance(item, str):  # Jeśli element jest tekstem
+                html_content.append(item)  # Dodaj tekst
+            elif isinstance(item, dict) and item.get('type') == 'Br':
+                html_content.append('<br>')  # Dodaj <br> jako tekst
+        
+        html_string = ''.join(html_content)
+
+        print(f"Output 1: {output_1}")
+        print(f"Output 2: {html_string}")
+
+    return dash.no_update
 
 if __name__ == '__main__':
     app.run_server(debug=True)

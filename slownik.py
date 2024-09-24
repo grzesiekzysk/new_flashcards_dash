@@ -65,7 +65,9 @@ class Diki:
                         
                         for span in m.find_all('span', 'hw'):
                             polish_word = re.sub(r'\s+', ' ', span.text).strip()
-                            polish_words.append([polish_word, part_of_speach])
+                            # If word not exist in list
+                            if polish_word not in [i[0] for i in polish_words]:
+                                polish_words.append([polish_word, part_of_speach])
                         
                         for m in m.find_all('div', 'exampleSentence'):
                             example = re.sub(r'\s+', ' ', m.text).strip()
