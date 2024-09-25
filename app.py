@@ -15,82 +15,138 @@ translation = {
     'other_words': []
 }
 
-app = dash.Dash(__name__)
+app = dash.Dash(__name__, assets_folder='assets')
 
-app.layout = html.Div([
-    dcc.Input(
-        id='input-box',
-        type='text',
-        value='',
-        placeholder='Wpisz coś...',
-        style={
-            'font-size': '18px',
-            'width': '200px'
-        }
-    ),
-    html.Button(
-        'Dodaj fiszkę', 
-        id='button-1', 
-        n_clicks=0,
-        style={
-            'font-size': '18px',
-            'vertical-align': 'top'
-        }
-    ),
+app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
+    html.Header([
+        dcc.Input(
+            id='input-box',
+            type='text',
+            value='',
+            placeholder='Wpisz coś...',
+            style={
+                'font-size': '20px',
+                'width': '300px',
+                'height': '30px',
+                'backgroundColor': '#444444',
+                'color': 'white',
+                'border': '1px solid #666666',
+                'border-radius': '5px',
+                'padding': '5px'
+            }
+        ),
+        html.Button(
+            'Dodaj fiszkę', 
+            id='button-1', 
+            n_clicks=0,
+            style={
+                'font-size': '20px',
+                'vertical-align': 'top',
+                'margin-left': '10px',
+                'backgroundColor': '#666666',
+                'color': 'white',
+                'border': 'none',
+                'border-radius': '5px',
+                'padding': '5px'
+            }
+        ),
+        # dcc.Clipboard(
+        #     target_id='output-1',
+        #     style={
+        #         'display': 'inline-block',
+        #         'padding': '10px',
+        #         'fontSize': '15px',
+        #         'backgroundColor': '#333333',
+        #         'color': 'white',
+        #         'border': 'none',
+        #         'cursor': 'pointer',
+        #         'border-radius': '10px',
+        #         'margin-left': '10px'
+        #     }
+        # ),
+        # dcc.Clipboard(
+        #     target_id='output-2',
+        #     style={
+        #         'display': 'inline-block',
+        #         'padding': '10px',
+        #         'fontSize': '15px',
+        #         'backgroundColor': '#333333',
+        #         'color': 'white',
+        #         'border': 'none',
+        #         'cursor': 'pointer',
+        #         'border-radius': '10px',
+        #         'margin-left': '10px'
+        #     }
+        # ),
+        html.Div(
+            id='popularity',
+            style={
+                'font-size': '30px',
+                'font-weight': 'bold',
+                'color': '#66B2FF',
+                'margin-left': '10px',
+                'display': 'inline-block',
+                'vertical-align': 'top'
+            }
+        )
+    ],
+    style={
+        'display': 'flex',
+        'flex-direction': 'row',
+        'align-items': 'center'
+    }),
     html.Div(
-        id='popularity',
+        dcc.Checklist(
+            id='checkboxes',
+            value=[],
+            labelStyle={
+                'display': 'block', 
+                'font-size': '20px',
+                'color': 'white',
+            }
+        ),
         style={
-            'font-size': '25px',
-            'font-weight': 'bold',
-            'color': '#3333FF',
-            'margin-left': '20px',
-            'display': 'inline-block',
-            'vertical-align': 'top'
+            'margin-top': '20px',
+            'padding': '10px',
+            'min-height': '50px',
+            'background-color': '#444444',
+            'border': '1px solid #666666',
+            'color': 'white'
         }
     ),
-    html.Br(),
-    html.Br(),
-    dcc.Checklist(
-        id='checkboxes',
-        value=[],
-        labelStyle={
-            #'display': 'grid', 
-            #'grid-template-columns': '50% 50%',
-            'display': 'block', 
-            'font-size': '20px'}
-    ),
-    html.Br(),
-    html.Br(),
     html.P(
         id='output-1',
         style={
-            'margin-top': '10px', 
-            'font-size': '20px', 
-            'border': '1px solid #000', 
-            'padding': '10px'}
-    ),
-    dcc.Clipboard(
-        target_id="output-1"
+            'margin-top': '30px',  # Przerwa nad output-1
+            'margin-bottom': '5px',  # Przerwa między output-1 a output-2
+            'font-size': '20px',
+            'padding': '10px',
+            'min-height': '50px',
+            'background-color': '#444444',
+            'border': '1px solid #666666',
+            'color': 'white'
+        }
     ),
     html.P(
         id='output-2',
         style={
-            'margin-top': '10px', 
-            'font-size': '20px', 
-            'border': '1px solid #000', 
-            'padding': '10px'}
-    ),
-    dcc.Clipboard(
-        target_id="output-2"
+            'margin-top': '20px',  # Większa przerwa między output-2 a output-1
+            'font-size': '20px',
+            'padding': '10px',
+            'min-height': '50px',
+            'background-color': '#444444',
+            'border': '1px solid #666666',
+            'color': 'white'
+        }
     ),
     html.P(
         id='output-3',
         style={
-            'margin-top': '10px', 
             'font-size': '20px',
             'color': '#66B2FF',
-            # 'border': '1px solid #000', 
-            'padding': '10px'}
+            'padding': '10px',
+            'margin-top': '10px'
+        }
     )
 ])
 
@@ -113,12 +169,6 @@ def update_output(input_value):
 
     checkboxy = [{'label': word[1] + f' [{parts_of_speach[word[0]]}]', 'value': word[0]} for word in enumerate(polish_words)]
 
-    # lista_3 = []
-
-    # for w in other_words:
-    #     lista_3.append(w)
-    #     lista_3.append(' | ')
-
     lista_3 = ' | '.join(other_words)
     
     return checkboxy, [0], popularity, lista_3 
@@ -134,7 +184,6 @@ def update_checkboxes(selected_values):
 
     global translation
 
-    # polish_words = translation['polish_words']
     polish_words = [i[0] for i in translation['polish_words']]
     english_word = translation['english_word']
     pronunciation = translation['pronunciation']
@@ -167,27 +216,27 @@ def update_checkboxes(selected_values):
     return usun_koncowe_br(lista_1), usun_koncowe_br(lista_2)
 
 @app.callback(
+    [Output('input-box', 'value')],
     Input('button-1', 'n_clicks'),
     [State('output-1', 'children'),
      State('output-2', 'children')]
 )
 def handle_button_click(n_clicks, output_1, output_2):
-    if n_clicks > 0:
-
+    if n_clicks > 0 and output_1 and output_2:
         html_content = []
-        
+
         for item in output_2:
-            if isinstance(item, str):  # Jeśli element jest tekstem
-                html_content.append(item)  # Dodaj tekst
+            if isinstance(item, str):
+                html_content.append(item)
             elif isinstance(item, dict) and item.get('type') == 'Br':
-                html_content.append('<br>')  # Dodaj <br> jako tekst
+                html_content.append('<br>')
         
         html_string = ''.join(html_content)
 
-        print(f"Output 1: {output_1}")
-        print(f"Output 2: {html_string}")
+        with open('new_flashcards.txt', 'a', encoding='utf-8') as plik:
+            plik.write(f'{output_1};{html_string}' + '\n')
 
-    return dash.no_update
+    return ['']
 
 if __name__ == '__main__':
     app.run_server(debug=True)
