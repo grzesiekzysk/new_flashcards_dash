@@ -50,34 +50,6 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
                 'padding': '5px'
             }
         ),
-        # dcc.Clipboard(
-        #     target_id='output-1',
-        #     style={
-        #         'display': 'inline-block',
-        #         'padding': '10px',
-        #         'fontSize': '15px',
-        #         'backgroundColor': '#333333',
-        #         'color': 'white',
-        #         'border': 'none',
-        #         'cursor': 'pointer',
-        #         'border-radius': '10px',
-        #         'margin-left': '10px'
-        #     }
-        # ),
-        # dcc.Clipboard(
-        #     target_id='output-2',
-        #     style={
-        #         'display': 'inline-block',
-        #         'padding': '10px',
-        #         'fontSize': '15px',
-        #         'backgroundColor': '#333333',
-        #         'color': 'white',
-        #         'border': 'none',
-        #         'cursor': 'pointer',
-        #         'border-radius': '10px',
-        #         'margin-left': '10px'
-        #     }
-        # ),
         html.Div(
             id='popularity',
             style={
@@ -106,37 +78,40 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
             }
         ),
         style={
-            'margin-top': '20px',
+            'margin-top': '10px',
             'padding': '10px',
             'min-height': '50px',
             'background-color': '#444444',
             'border': '1px solid #666666',
-            'color': 'white'
+            'color': 'white',
+            'border-radius': '5px'
         }
     ),
     html.P(
         id='output-1',
         style={
-            'margin-top': '30px',  # Przerwa nad output-1
+            'margin-top': '10px',  # Przerwa nad output-1
             'margin-bottom': '5px',  # Przerwa między output-1 a output-2
             'font-size': '20px',
             'padding': '10px',
             'min-height': '50px',
             'background-color': '#444444',
             'border': '1px solid #666666',
-            'color': 'white'
+            'color': 'white',
+            'border-radius': '5px'
         }
     ),
     html.P(
         id='output-2',
         style={
-            'margin-top': '20px',  # Większa przerwa między output-2 a output-1
+            'margin-top': '10px',  # Większa przerwa między output-2 a output-1
             'font-size': '20px',
             'padding': '10px',
             'min-height': '50px',
             'background-color': '#444444',
             'border': '1px solid #666666',
-            'color': 'white'
+            'color': 'white',
+            'border-radius': '5px'
         }
     ),
     html.P(
@@ -166,8 +141,13 @@ def update_output(input_value):
     parts_of_speach = [i[1] for i in translation['polish_words']]
     other_words = translation['other_words']
     popularity = translation['popularity']
+    examples = translation['examples']
 
-    checkboxy = [{'label': word[1] + f' [{parts_of_speach[word[0]]}]', 'value': word[0]} for word in enumerate(polish_words)]
+    checkboxy = [{
+        'label': f"{word[1]} [{parts_of_speach[word[0]]}] 📝" 
+        if word[1] in examples.keys() else f"{word[1]} [{parts_of_speach[word[0]]}]", 
+        'value': word[0]
+        } for word in enumerate(polish_words)]
 
     lista_3 = ' | '.join(other_words)
     
