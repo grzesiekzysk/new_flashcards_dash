@@ -12,6 +12,7 @@ translation = {
     'popularity': None,
     'pronunciation': None,
     'examples': {},
+    'synonyms':{},
     'other_words': []
 }
 
@@ -36,7 +37,7 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
             }
         ),
         html.Button(
-            'Dodaj fiszkę', 
+            'Dodaj', 
             id='button-1', 
             n_clicks=0,
             style={

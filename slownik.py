@@ -17,11 +17,12 @@ class Diki:
             'OTHER': 'OTHER'
         }
         self.translation_return = {
-            'polish_words': [],
             'english_word': None,
             'popularity': None,
             'pronunciation': None,
+            'polish_words': [],
             'examples': {},
+            'synonyms': {},
             'other_words': []
         }
 
@@ -38,11 +39,12 @@ class Diki:
         soup = BeautifulSoup(result.text, 'html.parser')
         self.soup = soup
 
-    def translation(self, word, exact_word = 1):
+    def translation(self, word):
 
         polish_words = []
         other_words = []
         examples = {}
+        synonyms = {}
         
         r = self._bs4_info(word)
 
@@ -57,29 +59,35 @@ class Diki:
 
         for div in div_class:
             with contextlib.suppress(AttributeError):
-                if exact_word == 1 and div.find("span", {"class": "hw"}).text.strip() == word or exact_word != 1:
+                if div.find("span", {"class": "hw"}).text.strip() == word:
                     
                     for m in div.find_all('li', re.compile('^meaning\d+')):
 
                         part_of_speach = m.find_parent('ol').find_previous_sibling('div').text.strip()
+                        polish_word = ', '.join([re.sub(r'\s+', ' ', span.text).strip() for span in m.find_all('span', 'hw')])
+                        polish_words.append([polish_word, part_of_speach])
                         
-                        for span in m.find_all('span', 'hw'):
-                            polish_word = re.sub(r'\s+', ' ', span.text).strip()
-                            # If word not exist in list
-                            if polish_word not in [i[0] for i in polish_words]:
-                                polish_words.append([polish_word, part_of_speach])
-                        
-                        for m in m.find_all('div', 'exampleSentence'):
-                            example = re.sub(r'\s+', ' ', m.text).strip()
+                        for n in m.find_all('div', 'exampleSentence'):
+                            example = re.sub(r'\s+', ' ', n.text).strip()
                             examples[polish_word] = example
+
+                        divs_syn  = m.find_all('div')
+
+                        for div_syn in divs_syn:
+                            if 'synonim' in div_syn.get_text():
+                                link = div_syn.find('a')
+                                if link:
+                                    synonyms[polish_word] = link.get_text()
+
                 else:
                     other_words.append(div.find("span", {"class": "hw"}).text.strip())
 
-        self.translation_return['polish_words'] = polish_words
         self.translation_return['english_word'] = word
         self.translation_return['popularity'] = self.star_dict[stars]
         self.translation_return['pronunciation'] = pronunciation
+        self.translation_return['polish_words'] = polish_words
         self.translation_return['examples'] = examples
         self.translation_return['other_words'] = other_words
+        self.translation_return['synonyms'] = synonyms
         
         return self.translation_return
