@@ -19,7 +19,6 @@ class Diki:
         self.translation_return = {
             'english_word': None,
             'popularity': None,
-            'pronunciation': None,
             'polish_words': [],
             'examples': {},
             'synonyms': {},
@@ -53,8 +52,6 @@ class Diki:
         except:
             stars = 'OTHER'
 
-        pronunciation  = '/' + eng_to_ipa.convert(word) + '/'
-
         div_class = self.soup.find_all('div','dictionaryEntity')
 
         for div in div_class:
@@ -78,13 +75,11 @@ class Diki:
                                 link = div_syn.find('a')
                                 if link:
                                     synonyms[polish_word] = link.get_text()
-
                 else:
                     other_words.append(div.find("span", {"class": "hw"}).text.strip())
-
+        
         self.translation_return['english_word'] = word
         self.translation_return['popularity'] = self.star_dict[stars]
-        self.translation_return['pronunciation'] = pronunciation
         self.translation_return['polish_words'] = polish_words
         self.translation_return['examples'] = examples
         self.translation_return['other_words'] = other_words
