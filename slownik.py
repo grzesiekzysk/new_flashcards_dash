@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import contextlib
-import eng_to_ipa
+# import eng_to_ipa
 import pandas as pd
 
 class Diki:
@@ -22,6 +22,7 @@ class Diki:
             'polish_words': [],
             'examples': {},
             'synonyms': {},
+            'opposites': [],
             'other_words': []
         }
 
@@ -44,6 +45,7 @@ class Diki:
         other_words = []
         examples = {}
         synonyms = {}
+        opposites = set()
         
         r = self._bs4_info(word)
 
@@ -75,6 +77,12 @@ class Diki:
                                 link = div_syn.find('a')
                                 if link:
                                     synonyms[polish_word] = link.get_text()
+
+                            if 'przeciwieństwo' in div_syn.get_text():
+                                link = div_syn.find('a')
+                                if link:
+                                    print(link.get_text())
+                                    opposites.add(link.get_text())
                 else:
                     other_words.append(div.find("span", {"class": "hw"}).text.strip())
         
@@ -84,5 +92,6 @@ class Diki:
         self.translation_return['examples'] = examples
         self.translation_return['other_words'] = other_words
         self.translation_return['synonyms'] = synonyms
+        self.translation_return['opposites'] = list(opposites)
         
         return self.translation_return

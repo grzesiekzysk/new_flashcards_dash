@@ -131,7 +131,6 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
             'margin-top': '10px'
         }
     ),
-    # Usunięcie 'dcc.Store', ponieważ używamy zmiennej globalnej
     html.Div(id='dummy-output', style={'display': 'none'})
 ])
 
@@ -143,7 +142,8 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
     Input('input-box', 'value')
 )
 def update_output(input_value):
-    global translation  # Deklaracja zmiennej globalnej
+    
+    global translation
     translation = diki.translation(input_value)
     if not translation:
         return [], None, '', ''
@@ -153,16 +153,30 @@ def update_output(input_value):
     other_words = translation['other_words']
     popularity = translation['popularity']
     examples = translation['examples']
+    opposites = translation['opposites']
 
     checkboxes = [{
-        'label': f"{word[1]} [{parts_of_speech[word[0]]}] 📝" 
-        if word[1] in examples.keys() else f"{word[1]} [{parts_of_speech[word[0]]}]", 
+        'label': f"{word[1]} [{parts_of_speech[word[0]]}] 📝"
+        if word[1] in examples.keys() else f"{word[1]} [{parts_of_speech[word[0]]}]",
         'value': word[0]
     } for word in enumerate(polish_words)]
 
-    lista_3 = ' | '.join(other_words)
-    
-    return checkboxes, 0, popularity, lista_3
+    lista_3_elements = []
+
+    for idx, word in enumerate(opposites):
+        lista_3_elements.append(html.Span(word, style={'color': 'red'}))
+        lista_3_elements.append(' 🔗 ')
+
+    other_words_set = set(other_words) - set(opposites)
+
+    for idx, word in enumerate(other_words_set):
+        lista_3_elements.append(html.Span(word))
+        lista_3_elements.append(' 🔗 ')
+
+    if lista_3_elements and lista_3_elements[-1] == ' 🔗 ':
+        lista_3_elements.pop()
+
+    return checkboxes, 0, popularity, lista_3_elements
 
 @app.callback(
     [Output('output-1', 'children'),
