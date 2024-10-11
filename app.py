@@ -1,6 +1,7 @@
 import dash
 from dash import dcc, html
 from dash.dependencies import Input, Output, State
+from datetime import datetime
 import eng_to_ipa
 
 from slownik import Diki
@@ -9,7 +10,7 @@ diki = Diki()
 # Inicjalizacja zmiennej globalnej 'translation'
 translation = {}
 
-app = dash.Dash(__name__, assets_folder='assets')
+app = dash.Dash(__name__, assets_folder='assets', prevent_initial_callbacks=True)
 
 app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
     html.Header([
@@ -135,8 +136,8 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
 ])
 
 @app.callback(
-    [Output('checkboxes', 'options'),
-     Output('checkboxes', 'value'),
+    [Output('checkboxes', 'options', allow_duplicate=True),
+     Output('checkboxes', 'value', allow_duplicate=True),
      Output('popularity', 'children'),
      Output('output-3', 'children')],
     Input('input-box', 'value')
@@ -227,27 +228,48 @@ def update_checkboxes(selected_value):
     return usun_koncowe_br([output_1]), usun_koncowe_br(output_2)
 
 @app.callback(
-    Output('dummy-output', 'children'),
+    [Output('checkboxes', 'options', allow_duplicate=True),
+     Output('checkboxes', 'value', allow_duplicate=True)],
     Input('button-1', 'n_clicks'),
     [State('output-1', 'children'),
-     State('output-2', 'children')]
+     State('output-2', 'children'),
+     State('checkboxes', 'value')]
 )
-def handle_button_click(n_clicks, output_1, output_2):
+def handle_button_click(n_clicks, output_1, output_2, selected_value):
     if n_clicks and n_clicks > 0 and output_1 and output_2:
         html_content = []
+
+        # for item in output_2:
+        #     if isinstance(item, str):
+        #         html_content.append(item)
+        #     elif isinstance(item, html.Br):
+        #         html_content.append('<br>')
 
         for item in output_2:
             if isinstance(item, str):
                 html_content.append(item)
-            elif isinstance(item, html.Br):
+            elif isinstance(item, dict) and item.get('type') == 'Br':
                 html_content.append('<br>')
         
         html_string = ''.join(html_content)
+        date_string = datetime.now().strftime('%Y%m%d')
 
-        with open('new_flashcards.txt', 'a', encoding='utf-8') as plik:
+        with open(f'C:/Users/grzes/Desktop/{date_string}_new_flashcards.txt', 'a', encoding='utf-8') as plik:
             plik.write(f'{output_1[0]};{html_string}\n')
 
-    return ''
+    translation['polish_words'].pop(selected_value)
+
+    polish_words = [i[0] for i in translation['polish_words']]
+    parts_of_speech = [i[1] for i in translation['polish_words']]
+    examples = translation['examples']
+
+    checkboxes = [{
+        'label': f"{word[1]} [{parts_of_speech[word[0]]}] 📝"
+        if word[1] in examples.keys() else f"{word[1]} [{parts_of_speech[word[0]]}]",
+        'value': word[0]
+    } for word in enumerate(polish_words)]
+
+    return checkboxes, 0
 
 @app.callback(
     Output('input-box', 'value'),
@@ -259,3 +281,4 @@ def clear_input(n_clicks):
 
 if __name__ == '__main__':
     app.run_server(debug=True)
+    # app.run_server(host='0.0.0.0', port=8050, debug=False)
