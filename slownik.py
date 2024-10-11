@@ -81,7 +81,6 @@ class Diki:
                             if 'przeciwieństwo' in div_syn.get_text():
                                 link = div_syn.find('a')
                                 if link:
-                                    print(link.get_text())
                                     opposites.add(link.get_text())
                 else:
                     other_words.append(div.find("span", {"class": "hw"}).text.strip())

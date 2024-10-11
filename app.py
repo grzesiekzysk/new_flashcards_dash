@@ -20,8 +20,8 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
             value='',
             placeholder='Wpisz coś...',
             style={
-                'font-size': '20px',
-                'width': '300px',
+                'font-size': '16px',
+                'width': '200px',
                 'height': '30px',
                 'backgroundColor': '#444444',
                 'color': 'white',
@@ -63,7 +63,7 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
         html.Div(
             id='popularity',
             style={
-                'font-size': '30px',
+                'font-size': '20px',
                 'font-weight': 'bold',
                 'color': '#66B2FF',
                 'margin-left': '10px',
@@ -82,7 +82,7 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
             id='checkboxes',
             labelStyle={
                 'display': 'block', 
-                'font-size': '20px',
+                'font-size': '14px',
                 'color': 'white',
             }
         ),
@@ -101,9 +101,9 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
         style={
             'margin-top': '10px',
             'margin-bottom': '5px',
-            'font-size': '20px',
+            'font-size': '14px',
             'padding': '10px',
-            'min-height': '50px',
+            'min-height': '20px',
             'background-color': '#444444',
             'border': '1px solid #666666',
             'color': 'white',
@@ -114,9 +114,9 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
         id='output-2',
         style={
             'margin-top': '10px',
-            'font-size': '20px',
+            'font-size': '14px',
             'padding': '10px',
-            'min-height': '50px',
+            'min-height': '20px',
             'background-color': '#444444',
             'border': '1px solid #666666',
             'color': 'white',
@@ -126,7 +126,7 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
     html.P(
         id='output-3',
         style={
-            'font-size': '20px',
+            'font-size': '14px',
             'color': '#66B2FF',
             'padding': '10px',
             'margin-top': '10px'
@@ -280,5 +280,5 @@ def clear_input(n_clicks):
     return ''
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
-    # app.run_server(host='0.0.0.0', port=8050, debug=False)
+    # app.run_server(debug=True)
+    app.run_server(host='0.0.0.0', port=8050, debug=False)
