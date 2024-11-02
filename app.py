@@ -20,7 +20,7 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
             value='',
             placeholder='Wpisz coś...',
             style={
-                'font-size': '16px',
+                'font-size': '20px',
                 'width': '200px',
                 'height': '30px',
                 'backgroundColor': '#444444',
@@ -256,8 +256,14 @@ def handle_button_click(n_clicks, output_1, output_2, selected_value):
 
         with open(f'C:/Users/grzes/Desktop/{date_string}_new_flashcards.txt', 'a', encoding='utf-8') as plik:
             plik.write(f'{output_1[0]};{html_string}\n')
+    try:
+        translation['polish_words'].pop(selected_value)
+    except:
+        print(selected_value, '\n')
+        print(translation['polish_words'], '\n')
 
-    translation['polish_words'].pop(selected_value)
+    # TODO: to niedziała za dobrze 
+    # Wywala sie np. na approach
 
     polish_words = [i[0] for i in translation['polish_words']]
     parts_of_speech = [i[1] for i in translation['polish_words']]
@@ -280,5 +286,5 @@ def clear_input(n_clicks):
     return ''
 
 if __name__ == '__main__':
-    # app.run_server(debug=True)
-    app.run_server(host='0.0.0.0', port=8050, debug=False)
+    app.run_server(debug=True)
+    # app.run_server(host='0.0.0.0', port=8050, debug=True)
