@@ -20,9 +20,9 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
             value='',
             placeholder='Wpisz coś...',
             style={
-                'font-size': '20px',
+                'font-size': '18px',
                 'width': '200px',
-                'height': '30px',
+                'height': '25px',
                 'backgroundColor': '#444444',
                 'color': 'white',
                 'border': '1px solid #666666',
@@ -35,7 +35,7 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
             id='button-1', 
             n_clicks=0,
             style={
-                'font-size': '20px',
+                'font-size': '18px',
                 'vertical-align': 'top',
                 'margin-left': '10px',
                 'backgroundColor': '#666666',
@@ -50,7 +50,7 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
             id='clear-button', 
             n_clicks=0,
             style={
-                'font-size': '20px',
+                'font-size': '18px',
                 'vertical-align': 'top',
                 'margin-left': '10px',
                 'backgroundColor': '#666666',
@@ -82,7 +82,7 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
             id='checkboxes',
             labelStyle={
                 'display': 'block', 
-                'font-size': '14px',
+                'font-size': '16px',
                 'color': 'white',
             }
         ),
@@ -101,7 +101,7 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
         style={
             'margin-top': '10px',
             'margin-bottom': '5px',
-            'font-size': '14px',
+            'font-size': '16px',
             'padding': '10px',
             'min-height': '20px',
             'background-color': '#444444',
@@ -114,7 +114,7 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
         id='output-2',
         style={
             'margin-top': '10px',
-            'font-size': '14px',
+            'font-size': '16px',
             'padding': '10px',
             'min-height': '20px',
             'background-color': '#444444',
@@ -126,10 +126,23 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
     html.P(
         id='output-3',
         style={
-            'font-size': '14px',
+            'font-size': '16px',
             'color': '#66B2FF',
             'padding': '10px',
             'margin-top': '10px'
+        }
+    ),
+    html.Div(
+        id='output-4',
+        style={
+            'margin-top': '10px',
+            'font-size': '16px',
+            'padding': '10px',
+            'min-height': '20px',
+            'background-color': 'rgba(163, 203, 255, 0.1)',
+            'border': '1px solid #666666',
+            'color': 'white',
+            'border-radius': '5px'
         }
     ),
     html.Div(id='dummy-output', style={'display': 'none'})
@@ -267,7 +280,7 @@ def handle_button_click(n_clicks, output_1, output_2, selected_value):
 
     polish_words = [i[0] for i in translation['polish_words']]
     parts_of_speech = [i[1] for i in translation['polish_words']]
-    examples = translation['examples']
+    examples = translation['examples']  
 
     checkboxes = [{
         'label': f"{word[1]} [{parts_of_speech[word[0]]}] 📝"
@@ -287,4 +300,4 @@ def clear_input(n_clicks):
 
 if __name__ == '__main__':
     app.run_server(debug=True)
-    # app.run_server(host='0.0.0.0', port=8050, debug=True)
+    # app.run_server(host='0.0.0.0', port=8050, debug=False)

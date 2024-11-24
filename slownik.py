@@ -78,7 +78,7 @@ class Diki:
                                 if link_s:
                                     synonyms[polish_word] = link_s.get_text()
 
-                            if 'przeciwieństwo' in div_syn.get_text():
+                            if 'przeciwieństwo' in div_syn.get_text() and 'synonim' not in div_syn.get_text():
                                 link_o = div_syn.find('a')
                                 if link_o:
                                     opposites.add(link_o.get_text())
