@@ -41,7 +41,8 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
                 'color': 'white',
                 'border': 'none',
                 'border-radius': '5px',
-                'padding': '5px'
+                'padding': '5px',
+                'cursor': 'pointer'
             }
         ),
         html.Button(
@@ -56,18 +57,24 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
                 'color': 'white',
                 'border': 'none',
                 'border-radius': '5px',
-                'padding': '5px'
+                'padding': '5px',
+                'cursor': 'pointer'
             }
         ),
         html.Div(
             id='popularity',
+            children='OTHER',
             style={
                 'font-size': '20px',
                 'font-weight': 'bold',
-                'color': '#66B2FF',
+                'color': '#ff746c',
                 'margin-left': '10px',
                 'display': 'inline-block',
-                'vertical-align': 'top'
+                'vertical-align': 'top',
+                'border-radius': '5px',
+                'padding': '5px',
+                'background-color': 'rgba(163, 203, 255, 0.25)',
+                'border': '1px solid #666666'
             }
         )
     ],
@@ -81,7 +88,7 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
             id='checkboxes',
             labelStyle={
                 'display': 'block', 
-                'font-size': '16px',
+                # 'font-size': '16px',
                 'color': 'white',
             }
         ),
@@ -100,7 +107,7 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
         style={
             'margin-top': '10px',
             'margin-bottom': '5px',
-            'font-size': '16px',
+            # 'font-size': '16px',
             'padding': '10px',
             'min-height': '20px',
             'background-color': '#444444',
@@ -113,7 +120,7 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
         id='output-2',
         style={
             'margin-top': '10px',
-            'font-size': '16px',
+            # 'font-size': '16px',
             'padding': '10px',
             'min-height': '20px',
             'background-color': '#444444',
@@ -125,7 +132,7 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
     html.P(
         id='output-3',
         style={
-            'font-size': '16px',
+            # 'font-size': '16px',
             'color': '#66B2FF',
             'padding': '10px',
             'margin-top': '10px'
@@ -158,7 +165,8 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
                     'color': 'white',
                     'border': 'none',
                     'border-radius': '5px',
-                    'padding': '5px'
+                    'padding': '5px',
+                    'cursor': 'pointer'
                 }
             ),
             html.Span(id='record-count')
@@ -337,5 +345,5 @@ def update_record_count(accumulated_records):
     return f'Liczba rekordów: {len(accumulated_records)}'
 
 if __name__ == '__main__':
-    # app.run_server(debug=True)
-    app.run_server(host='0.0.0.0', port=8080)
+    app.run_server(debug=True)
+    # app.run_server(host='0.0.0.0', port=8080)
