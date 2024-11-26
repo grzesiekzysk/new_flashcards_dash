@@ -17,12 +17,13 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
             id='input-box',
             type='text',
             value='',
-            placeholder='Wpisz coś...',
+            #placeholder='angielskie słowo',
             style={
-                'font-size': '18px',
-                'width': '200px',
-                'height': '25px',
-                'backgroundColor': '#444444',
+                'font-size': '16px',
+                'text-align': 'center',
+                'width': '150px',
+                'height': '20px',
+                'backgroundColor': 'rgba(163, 203, 255, 0.1)',
                 'color': 'white',
                 'border': '1px solid #666666',
                 'border-radius': '5px',
@@ -34,7 +35,7 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
             id='button-1', 
             n_clicks=0,
             style={
-                'font-size': '18px',
+                'font-size': '16px',
                 'vertical-align': 'top',
                 'margin-left': '10px',
                 'backgroundColor': '#666666',
@@ -50,7 +51,7 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
             id='clear-button', 
             n_clicks=0,
             style={
-                'font-size': '18px',
+                'font-size': '16px',
                 'vertical-align': 'top',
                 'margin-left': '10px',
                 'backgroundColor': '#666666',
@@ -65,16 +66,16 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
             id='popularity',
             children='OTHER',
             style={
-                'font-size': '20px',
+                'font-size': '16px',
                 'font-weight': 'bold',
-                'color': '#ff746c',
+                'color': '#ffffff',
                 'margin-left': '10px',
                 'display': 'inline-block',
                 'vertical-align': 'top',
                 'border-radius': '5px',
                 'padding': '5px',
-                'background-color': 'rgba(163, 203, 255, 0.25)',
-                'border': '1px solid #666666'
+                'background-color': 'rgba(25, 165, 111, 0.5)',
+                'border': '1px solid #19a56f'
             }
         )
     ],
@@ -143,11 +144,11 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
         style={
             'margin-top': '10px',
             'font-size': '16px',
-            'padding': '10px',
-            'width': '250px',
+            'padding': '5px',
+            'width': '225px',
             'min-height': '20px',
-            'background-color': 'rgba(163, 203, 255, 0.1)',
-            'border': '1px solid #666666',
+            'background-color': 'rgba(222, 49, 99, 0.25)',
+            'border': '1px solid #D70040',
             'color': 'white',
             'border-radius': '5px',
             'display': 'flex',
@@ -159,9 +160,9 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
                 id='download-button',
                 n_clicks=0,
                 style={
-                    'font-size': '18px',
+                    'font-size': '16px',
                     'margin-right': '10px',
-                    'backgroundColor': '#666666',
+                    'backgroundColor': '#D70040',
                     'color': 'white',
                     'border': 'none',
                     'border-radius': '5px',
@@ -169,7 +170,7 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
                     'cursor': 'pointer'
                 }
             ),
-            html.Span(id='record-count')
+            html.Span(id='record-count', children='Liczba rekordów: 0')
         ]
     ),
     dcc.Download(id="download-text"),
@@ -345,5 +346,5 @@ def update_record_count(accumulated_records):
     return f'Liczba rekordów: {len(accumulated_records)}'
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
-    # app.run_server(host='0.0.0.0', port=8080)
+    # app.run_server(debug=True)
+    app.run_server(host='0.0.0.0', port=8080)
