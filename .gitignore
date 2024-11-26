@@ -1,3 +1,4 @@
 *.lnk
 *.ipynb
 __pycache__/
+deploy.txt
