@@ -10,7 +10,7 @@ diki = Diki()
 app = dash.Dash(__name__, assets_folder='assets', prevent_initial_callbacks=True)
 
 app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
-    dcc.Store(id='translation-store', data={}),  # Przechowujemy translation w Store
+    dcc.Store(id='translation-store', data={}),
     dcc.Store(id='accumulated-records', data=[]),
     html.Header([
         dcc.Input(
@@ -21,8 +21,10 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
             style={
                 'font-size': '16px',
                 'text-align': 'center',
-                'width': '150px',
+                'width': 'calc(100% - 190px)',
+                'max-width': '200px',
                 'height': '20px',
+                # 'margin-left': '10px',
                 'backgroundColor': 'rgba(163, 203, 255, 0.1)',
                 'color': 'white',
                 'border': '1px solid #666666',
@@ -30,43 +32,13 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
                 'padding': '5px'
             }
         ),
-        html.Button(
-            'Dodaj', 
-            id='button-1', 
-            n_clicks=0,
-            style={
-                'font-size': '16px',
-                'vertical-align': 'top',
-                'margin-left': '10px',
-                'backgroundColor': '#666666',
-                'color': 'white',
-                'border': 'none',
-                'border-radius': '5px',
-                'padding': '5px',
-                'cursor': 'pointer'
-            }
-        ),
-        html.Button(
-            'Wyczyść', 
-            id='clear-button', 
-            n_clicks=0,
-            style={
-                'font-size': '16px',
-                'vertical-align': 'top',
-                'margin-left': '10px',
-                'backgroundColor': '#666666',
-                'color': 'white',
-                'border': 'none',
-                'border-radius': '5px',
-                'padding': '5px',
-                'cursor': 'pointer'
-            }
-        ),
         html.Div(
             id='popularity',
             children='OTHER',
             style={
                 'font-size': '16px',
+                'text-align': 'center',
+                'width': '95px',
                 'font-weight': 'bold',
                 'color': '#ffffff',
                 'margin-left': '10px',
@@ -76,6 +48,24 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
                 'padding': '5px',
                 'background-color': 'rgba(25, 165, 111, 0.5)',
                 'border': '1px solid #19a56f'
+            }
+        ),
+        html.Button(
+            'Dodaj', 
+            id='button-1', 
+            n_clicks=0,
+            style={
+                'font-size': '16px',
+                'width': '75px',
+                'vertical-align': 'left',
+                'margin-left': '10px',
+                'backgroundColor': '#666666',
+                'color': 'white',
+                'border': 'none',
+                'border-radius': '5px',
+                'padding': '5px',
+                'cursor': 'pointer',
+                'display': 'block',
             }
         )
     ],
@@ -316,14 +306,6 @@ def handle_button_click(n_clicks, output_1, output_2, selected_value, accumulate
     } for word in enumerate(polish_words)]
 
     return checkboxes, 0, accumulated_records, translation
-
-@app.callback(
-    Output('input-box', 'value'),
-    Input('clear-button', 'n_clicks'),
-    prevent_initial_call=True
-)
-def clear_input(n_clicks):
-    return ''
 
 @app.callback(
     [Output('download-text', 'data'),
