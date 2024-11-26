@@ -2,8 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import contextlib
-# import eng_to_ipa
-import pandas as pd
 
 class Diki:
     def __init__(self, lang='english'):
