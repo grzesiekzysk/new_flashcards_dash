@@ -13,6 +13,24 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
     dcc.Store(id='translation-store', data={}),
     dcc.Store(id='accumulated-records', data=[]),
     html.Header([
+        html.Button(
+            'Dodaj', 
+            id='button-1', 
+            n_clicks=0,
+            style={
+                'font-size': '16px',
+                'width': '75px',
+                'vertical-align': 'left',
+                # 'margin-left': '10px',
+                'backgroundColor': '#666666',
+                'color': 'white',
+                'border': 'none',
+                'border-radius': '5px',
+                'padding': '5px',
+                'cursor': 'pointer',
+                'display': 'block',
+            }
+        ),
         dcc.Input(
             id='input-box',
             type='text',
@@ -20,11 +38,12 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
             #placeholder='angielskie słowo',
             style={
                 'font-size': '16px',
-                'text-align': 'center',
+                'text-align': 'left',
+                'text-indent': '5px',
                 'width': 'calc(100% - 190px)',
-                'max-width': '200px',
+                # 'max-width': '250px',
                 'height': '20px',
-                # 'margin-left': '10px',
+                'margin-left': '10px',
                 'backgroundColor': 'rgba(163, 203, 255, 0.1)',
                 'color': 'white',
                 'border': '1px solid #666666',
@@ -48,24 +67,6 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
                 'padding': '5px',
                 'background-color': 'rgba(25, 165, 111, 0.5)',
                 'border': '1px solid #19a56f'
-            }
-        ),
-        html.Button(
-            'Dodaj', 
-            id='button-1', 
-            n_clicks=0,
-            style={
-                'font-size': '16px',
-                'width': '75px',
-                'vertical-align': 'left',
-                'margin-left': '10px',
-                'backgroundColor': '#666666',
-                'color': 'white',
-                'border': 'none',
-                'border-radius': '5px',
-                'padding': '5px',
-                'cursor': 'pointer',
-                'display': 'block',
             }
         )
     ],
@@ -126,7 +127,9 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
             # 'font-size': '16px',
             'color': '#66B2FF',
             'padding': '10px',
-            'margin-top': '10px'
+            'margin-top': '10px',
+            # 'border': '1px solid #666666',
+            # 'border-radius': '5px'
         }
     ),
     html.Div(
