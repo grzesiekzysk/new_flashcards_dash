@@ -7,7 +7,12 @@ import eng_to_ipa
 from slownik import Diki
 diki = Diki()
 
-app = dash.Dash(__name__, assets_folder='assets', prevent_initial_callbacks=True)
+app = dash.Dash(
+    __name__, 
+    title='Generator fiszek',
+    assets_folder='assets', 
+    prevent_initial_callbacks=True
+)
 
 app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
     dcc.Store(id='translation-store', data={}),
@@ -342,5 +347,5 @@ def update_record_count(accumulated_records):
     return f'Liczba rekordów: {len(accumulated_records)}'
 
 if __name__ == '__main__':
-    # app.run_server(debug=True)
-    app.run_server(host='0.0.0.0', port=8080)
+    app.run_server(debug=True)
+    # app.run_server(host='0.0.0.0', port=8080)
