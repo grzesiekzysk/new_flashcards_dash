@@ -12,6 +12,17 @@ app = dash.Dash(__name__, assets_folder='assets', prevent_initial_callbacks=True
 app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
     dcc.Store(id='translation-store', data={}),
     dcc.Store(id='accumulated-records', data=[]),
+    html.H1(
+        'Generator fiszek do aplikacji Anki',
+        style={
+            'text-align': 'center',
+            'font-size': '26px',
+            'margin-top': '0px',
+            'padding': '5px',
+            'border-bottom': '4px double #666666',
+            'box-shadow': '0 4px 2px -2px rgba(0, 0, 0, 0.3)'
+        }
+    ),
     html.Header([
         html.Button(
             'Dodaj', 
@@ -22,7 +33,7 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
                 'width': '75px',
                 'vertical-align': 'left',
                 # 'margin-left': '10px',
-                'backgroundColor': '#666666',
+                'background-color': '#666666',
                 'color': 'white',
                 'border': 'none',
                 'border-radius': '5px',
@@ -35,7 +46,7 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
             id='input-box',
             type='text',
             value='',
-            #placeholder='angielskie słowo',
+            placeholder='Wpisz angielskie słowo...',
             style={
                 'font-size': '16px',
                 'text-align': 'left',
