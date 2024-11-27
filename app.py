@@ -2,9 +2,8 @@ import dash
 from dash import dcc, html
 from dash.dependencies import Input, Output, State
 from datetime import datetime
-import eng_to_ipa
+from slownik import Diki, pronunciation
 
-from slownik import Diki
 diki = Diki()
 
 app = dash.Dash(
@@ -20,12 +19,11 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
     html.H1(
         'Generator fiszek do aplikacji Anki',
         style={
-            'text-align': 'center',
-            'font-size': '26px',
+            'text-shadow': '.022em .022em .022em #111',
             'margin-top': '0px',
-            'padding': '5px',
-            'border-bottom': '4px double #666666',
-            'box-shadow': '0 4px 2px -2px rgba(0, 0, 0, 0.3)'
+            'padding': '10px',
+            'border-bottom': '2px double #666666',
+            'letter-spacing': '.04em'
         }
     ),
     html.Header([
@@ -137,23 +135,12 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
             'border-radius': '5px'
         }
     ),
-    html.P(
-        id='output-3',
-        style={
-            # 'font-size': '16px',
-            'color': '#66B2FF',
-            'padding': '10px',
-            'margin-top': '10px',
-            # 'border': '1px solid #666666',
-            # 'border-radius': '5px'
-        }
-    ),
     html.Div(
         id='output-4',
         style={
             'margin-top': '10px',
             'font-size': '16px',
-            'padding': '5px',
+            'padding': '10px',
             'width': '225px',
             'min-height': '20px',
             'background-color': 'rgba(222, 49, 99, 0.25)',
@@ -183,6 +170,39 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
         ]
     ),
     dcc.Download(id="download-text"),
+    # dcc.RadioItems(
+    #     id='flags',
+    #     options=[
+    #         {'label': html.Span([
+    #             html.Img(src='https://flagcdn.com/w40/gb.png', style={'height': '15px', 'vertical-align': 'middle'}),
+    #             html.Span("English", style={'font-size': '15px', 'padding': '10px'})
+    #         ]), 'value': 'EN'},
+    #         {'label': html.Span([
+    #             html.Img(src='https://flagcdn.com/w40/fr.png', style={'height': '15px', 'vertical-align': 'middle'}),
+    #             html.Span("French", style={'font-size': '15px', 'padding': '10px'})
+    #         ]), 'value': 'FR'},
+    #         {'label': html.Span([
+    #             html.Img(src='https://flagcdn.com/w40/es.png', style={'height': '15px', 'vertical-align': 'middle'}),
+    #             html.Span("Spanish", style={'font-size': '15px', 'padding': '10px'})
+    #         ]), 'value': 'ES'},
+    #     ],
+    #     value='EN',
+    #     labelStyle={'margin-right': '5px'},
+    #     style={
+    #         'padding': '10px'
+    #     }
+    # ),
+    html.P(
+        id='output-3',
+        style={
+            # 'font-size': '16px',
+            'color': '#66B2FF',
+            'padding': '10px',
+            'margin-top': '10px',
+            # 'border': '1px solid #666666',
+            # 'border-radius': '5px'
+        }
+    ),
     html.Div(id='dummy-output', style={'display': 'none'})
 ])
 
@@ -258,12 +278,12 @@ def update_checkboxes(selected_value, translation):
 
     try:
         synonyms = ' (' + translation['synonyms'][selected_word] + ')'
-        pronunciation_syn = ' /' + eng_to_ipa.convert(translation['synonyms'][selected_word]) + '/'
+        pronunciation_syn = ' /' + pronunciation(translation['synonyms'][selected_word]) + '/'
     except:
         synonyms = ''
         pronunciation_syn = ''
 
-    pronunciation_eng = '/' + eng_to_ipa.convert(english_word) + '/'
+    pronunciation_eng = '/' + pronunciation(english_word) + '/'
 
     output_1 = selected_word
     output_2 = [english_word + synonyms, html.Br(), pronunciation_eng + pronunciation_syn, html.Br(), html.Br()]
@@ -347,5 +367,5 @@ def update_record_count(accumulated_records):
     return f'Liczba rekordów: {len(accumulated_records)}'
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
-    # app.run_server(host='0.0.0.0', port=8080)
+    # app.run_server(debug=True)
+    app.run_server(host='0.0.0.0', port=8080)

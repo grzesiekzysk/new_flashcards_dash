@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import contextlib
+import eng_to_ipa
 
 class Diki:
     def __init__(self, lang='english'):
@@ -92,3 +93,8 @@ class Diki:
         self.translation_return['opposites'] = list(opposites)
         
         return self.translation_return
+    
+def pronunciation(word, lang='english'):
+
+    if lang == 'english':
+        return eng_to_ipa.convert(word)
