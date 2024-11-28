@@ -17,7 +17,7 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
     dcc.Store(id='translation-store', data={}),
     dcc.Store(id='accumulated-records', data=[]),
     html.H1(
-        'Generator fiszek do aplikacji Anki',
+        'Generator fiszek do Anki',
         style={
             'text-shadow': '.022em .022em .022em #111',
             'margin-top': '0px',
@@ -59,7 +59,7 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
                 'height': '20px',
                 'margin-left': '10px',
                 'background-color': 'rgba(179,235,242, 0.25)',
-                'border': '1px solid #b3ebf2',
+                'border': '1px solid #6d8196',
                 'color': 'white',
                 'border-radius': '5px',
                 'padding': '5px'
@@ -170,54 +170,6 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
         ]
     ),
     dcc.Download(id="download-text"),
-    # html.Div(
-    #     id='div_langs',
-    #     style={
-    #         'margin-top': '10px',
-    #         'font-size': '16px',
-    #         'padding': '10px',
-    #         'width': '380px',
-    #         'min-height': '20px',
-    #         'background-color': 'rgba(179,235,242, 0.25)',
-    #         'border': '1px solid #b3ebf2',
-    #         'color': 'white',
-    #         'border-radius': '5px',
-    #         'display': 'flex',
-    #         'align-items': 'center',
-    #         # 'justify-content': 'flex-start'
-    #     },
-    #     children=[
-    #         dcc.RadioItems(
-    #             id='select-lang',
-    #             options=[
-    #                 {'label': html.Span([
-    #                     html.Img(src='https://flagicons.lipis.dev/flags/4x3/gb.svg', 
-    #                             style={'height': '20px', 'vertical-align': 'middle'}),
-    #                     html.Span(" Angielski", style={'font-size': '15px', 'padding-left': '5px'})
-    #                 ]), 'value': 'ENG'},
-    #                 {'label': html.Span([
-    #                     html.Img(src='https://flagicons.lipis.dev/flags/4x3/fr.svg', 
-    #                             style={'height': '20px', 'vertical-align': 'middle'}),
-    #                     html.Span(" Francuski", style={'font-size': '15px', 'padding-left': '5px'})
-    #                 ]), 'value': 'FRA'},
-    #                 {'label': html.Span([
-    #                     html.Img(src='https://flagicons.lipis.dev/flags/4x3/es.svg', 
-    #                             style={'height': '20px', 'vertical-align': 'middle'}),
-    #                     html.Span(" Hiszpański", style={'font-size': '15px', 'padding-left': '5px'})
-    #                 ]), 'value': 'ESP'}
-    #             ],
-    #             value='ENG',
-    #             labelStyle={
-    #                 'display': 'inline-block',
-    #                 'margin-right': '0px',
-    #                 'vertical-align': 'middle'
-    #             },
-    #             style={
-    #                 'text-align': 'left',
-    #             }
-    #         )
-    #     ]
-    # ),
     html.P(
         id='output-3',
         style={
@@ -279,11 +231,8 @@ def update_output(input_value):
     [Output('output-1', 'children'),
      Output('output-2', 'children')],
     [Input('checkboxes', 'value'),
-     State('translation-store', 'data')# ,
-     # State('select-lang', 'value')
-     ]
+     State('translation-store', 'data')]
 )
-# def update_checkboxes(selected_value, translation, lang):
 def update_checkboxes(selected_value, translation):
     if selected_value is None or not translation:
         return None, None
@@ -362,7 +311,6 @@ def handle_button_click(n_clicks, output_1, output_2, selected_value, accumulate
         print(selected_value, '\n')
         print(translation['polish_words'], '\n')
 
-    # Aktualizujemy checkboxes po usunięciu wybranego słowa
     polish_words = [i[0] for i in translation['polish_words']]
     parts_of_speech = [i[1] for i in translation['polish_words']]
     examples = translation['examples']  
@@ -395,24 +343,6 @@ def download_file(n_clicks, accumulated_records):
 def update_record_count(accumulated_records):
     return f'Liczba rekordów: {len(accumulated_records)}'
 
-# @app.callback(
-#     Output('input-box', 'placeholder'),
-#     Input('select-lang', 'value')
-# )
-# def update_checkboxes(selected_value):
-
-#     global diki
-#     diki = Diki(lang=selected_value)
-
-#     if selected_value == 'ENG':
-#         return 'Wpisz angielskie słowo...'
-#     elif selected_value == 'ESP':
-#         return 'Wpisz hiszpańskie słowo...'
-#     elif selected_value == 'FRA':
-#         return 'Wpisz francuskie słowo...'
-
-#     return 'Wpisz słowo...'
-
 if __name__ == '__main__':
-    app.run_server(debug=True)
-    # app.run_server(host='0.0.0.0', port=8080)
+    # app.run_server(debug=True)
+    app.run_server(host='0.0.0.0', port=8080)
