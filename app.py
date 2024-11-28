@@ -58,9 +58,9 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
                 # 'max-width': '250px',
                 'height': '20px',
                 'margin-left': '10px',
-                'backgroundColor': 'rgba(163, 203, 255, 0.1)',
+                'background-color': 'rgba(179,235,242, 0.25)',
+                'border': '1px solid #b3ebf2',
                 'color': 'white',
-                'border': '1px solid #666666',
                 'border-radius': '5px',
                 'padding': '5px'
             }
@@ -102,8 +102,8 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
             'margin-top': '10px',
             'padding': '10px',
             'min-height': '50px',
-            'background-color': '#444444',
-            'border': '1px solid #666666',
+            'background-color': 'rgba(109, 129, 150, 0.1)',
+            'border': '1px solid #6d8196',
             'color': 'white',
             'border-radius': '5px'
         }
@@ -116,8 +116,8 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
             # 'font-size': '16px',
             'padding': '10px',
             'min-height': '20px',
-            'background-color': '#444444',
-            'border': '1px solid #666666',
+            'background-color': 'rgba(109, 129, 150, 0.1)',
+            'border': '1px solid #6d8196',
             'color': 'white',
             'border-radius': '5px'
         }
@@ -129,8 +129,8 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
             # 'font-size': '16px',
             'padding': '10px',
             'min-height': '20px',
-            'background-color': '#444444',
-            'border': '1px solid #666666',
+            'background-color': 'rgba(109, 129, 150, 0.1)',
+            'border': '1px solid #6d8196',
             'color': 'white',
             'border-radius': '5px'
         }
@@ -144,7 +144,7 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
             'width': '225px',
             'min-height': '20px',
             'background-color': 'rgba(222, 49, 99, 0.25)',
-            'border': '1px solid #D70040',
+            'border': '1px solid #DE3163',
             'color': 'white',
             'border-radius': '5px',
             'display': 'flex',
@@ -170,27 +170,53 @@ app.layout = html.Div(style={'color': 'white', 'padding': '20px'}, children=[
         ]
     ),
     dcc.Download(id="download-text"),
-    # dcc.RadioItems(
-    #     id='flags',
-    #     options=[
-    #         {'label': html.Span([
-    #             html.Img(src='https://flagcdn.com/w40/gb.png', style={'height': '15px', 'vertical-align': 'middle'}),
-    #             html.Span("English", style={'font-size': '15px', 'padding': '10px'})
-    #         ]), 'value': 'EN'},
-    #         {'label': html.Span([
-    #             html.Img(src='https://flagcdn.com/w40/fr.png', style={'height': '15px', 'vertical-align': 'middle'}),
-    #             html.Span("French", style={'font-size': '15px', 'padding': '10px'})
-    #         ]), 'value': 'FR'},
-    #         {'label': html.Span([
-    #             html.Img(src='https://flagcdn.com/w40/es.png', style={'height': '15px', 'vertical-align': 'middle'}),
-    #             html.Span("Spanish", style={'font-size': '15px', 'padding': '10px'})
-    #         ]), 'value': 'ES'},
-    #     ],
-    #     value='EN',
-    #     labelStyle={'margin-right': '5px'},
+    # html.Div(
+    #     id='div_langs',
     #     style={
-    #         'padding': '10px'
-    #     }
+    #         'margin-top': '10px',
+    #         'font-size': '16px',
+    #         'padding': '10px',
+    #         'width': '380px',
+    #         'min-height': '20px',
+    #         'background-color': 'rgba(179,235,242, 0.25)',
+    #         'border': '1px solid #b3ebf2',
+    #         'color': 'white',
+    #         'border-radius': '5px',
+    #         'display': 'flex',
+    #         'align-items': 'center',
+    #         # 'justify-content': 'flex-start'
+    #     },
+    #     children=[
+    #         dcc.RadioItems(
+    #             id='select-lang',
+    #             options=[
+    #                 {'label': html.Span([
+    #                     html.Img(src='https://flagicons.lipis.dev/flags/4x3/gb.svg', 
+    #                             style={'height': '20px', 'vertical-align': 'middle'}),
+    #                     html.Span(" Angielski", style={'font-size': '15px', 'padding-left': '5px'})
+    #                 ]), 'value': 'ENG'},
+    #                 {'label': html.Span([
+    #                     html.Img(src='https://flagicons.lipis.dev/flags/4x3/fr.svg', 
+    #                             style={'height': '20px', 'vertical-align': 'middle'}),
+    #                     html.Span(" Francuski", style={'font-size': '15px', 'padding-left': '5px'})
+    #                 ]), 'value': 'FRA'},
+    #                 {'label': html.Span([
+    #                     html.Img(src='https://flagicons.lipis.dev/flags/4x3/es.svg', 
+    #                             style={'height': '20px', 'vertical-align': 'middle'}),
+    #                     html.Span(" Hiszpański", style={'font-size': '15px', 'padding-left': '5px'})
+    #                 ]), 'value': 'ESP'}
+    #             ],
+    #             value='ENG',
+    #             labelStyle={
+    #                 'display': 'inline-block',
+    #                 'margin-right': '0px',
+    #                 'vertical-align': 'middle'
+    #             },
+    #             style={
+    #                 'text-align': 'left',
+    #             }
+    #         )
+    #     ]
     # ),
     html.P(
         id='output-3',
@@ -253,8 +279,11 @@ def update_output(input_value):
     [Output('output-1', 'children'),
      Output('output-2', 'children')],
     [Input('checkboxes', 'value'),
-     State('translation-store', 'data')]
+     State('translation-store', 'data')# ,
+     # State('select-lang', 'value')
+     ]
 )
+# def update_checkboxes(selected_value, translation, lang):
 def update_checkboxes(selected_value, translation):
     if selected_value is None or not translation:
         return None, None
@@ -366,6 +395,24 @@ def download_file(n_clicks, accumulated_records):
 def update_record_count(accumulated_records):
     return f'Liczba rekordów: {len(accumulated_records)}'
 
+# @app.callback(
+#     Output('input-box', 'placeholder'),
+#     Input('select-lang', 'value')
+# )
+# def update_checkboxes(selected_value):
+
+#     global diki
+#     diki = Diki(lang=selected_value)
+
+#     if selected_value == 'ENG':
+#         return 'Wpisz angielskie słowo...'
+#     elif selected_value == 'ESP':
+#         return 'Wpisz hiszpańskie słowo...'
+#     elif selected_value == 'FRA':
+#         return 'Wpisz francuskie słowo...'
+
+#     return 'Wpisz słowo...'
+
 if __name__ == '__main__':
-    # app.run_server(debug=True)
-    app.run_server(host='0.0.0.0', port=8080)
+    app.run_server(debug=True)
+    # app.run_server(host='0.0.0.0', port=8080)

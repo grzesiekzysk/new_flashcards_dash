@@ -3,9 +3,10 @@ from bs4 import BeautifulSoup
 import re
 import contextlib
 import eng_to_ipa
+import epitran
 
 class Diki:
-    def __init__(self, lang='english'):
+    def __init__(self, lang='ENG'):
         self.lang = lang
         self.star_dict = {
             '*****': 'TOP 1000',
@@ -27,11 +28,11 @@ class Diki:
 
     def _bs4_info(self, word):
         langs = {
-            "english": "angielskiego",
-            "german": "niemieckiego",
-            "spanish": 'hiszpanskiego',
-            "italian": 'wloskiego',
-            "french": 'francuskiego'
+            "ENG": "angielskiego",
+            "GER": "niemieckiego",
+            "ESP": 'hiszpanskiego',
+            "ITA": 'wloskiego',
+            "FRA": 'francuskiego'
         }
         
         result = requests.get(f'https://www.diki.pl/slownik-{langs[self.lang]}?q={word}')
@@ -94,7 +95,18 @@ class Diki:
         
         return self.translation_return
     
-def pronunciation(word, lang='english'):
+def pronunciation(word, lang='ENG'):
 
-    if lang == 'english':
+    if lang == 'ENG':
         return eng_to_ipa.convert(word)
+    
+    elif lang == 'FRA':
+        epi_fr = epitran.Epitran('fra-Latn')
+        return epi_fr.transliterate(word)
+    
+    elif lang == 'ESP':
+        epi_fr = epitran.Epitran('spa-Latn')
+        return epi_fr.transliterate(word)
+    
+    else:
+        '???'
